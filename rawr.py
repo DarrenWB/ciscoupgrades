@@ -61,9 +61,14 @@ def show_flash():
         try:
             net_connect = ConnectHandler(**host)
             output = net_connect.send_command('dir flash:')
-            if 'isr1767.bin' in output:
+            if 'isr1767.bin' or 'cat1767.bin' in output:
                 print(host)
+                net_connect.save_config()
+                print(output)
                 print('Above is ready to reboot')
+            else:
+                print(host)
+                print('Needs to download firmware')
         except (NetmikoTimeoutException, NetMikoAuthenticationException, AuthenticationException):
             print('Failed to connect to')
             print(host)
