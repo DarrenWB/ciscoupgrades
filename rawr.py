@@ -15,6 +15,8 @@ count = len(IPs)
 devices = []
 username = input("Enter your username: ")
 password = input("Enter your password: ")
+
+# Command object for chaning boot-order routers
 config = ['boot-start-marker',
           'no boot system flash bootflash:/isr4400-universalk9.17.03.03.SPA.bin',
           'no boot system flash bootflash:/isr4400-universalk9.16.09.07.SPA.bin',
@@ -26,6 +28,7 @@ config = ['boot-start-marker',
           'boot-end-marker'
           ]
 
+# Setting up array for logging into the listed devices in the txt
 for x in IPs:
     cisco_4431 = {
         'device_type': 'cisco_ios',
@@ -38,6 +41,7 @@ for x in IPs:
     devices.append(cisco_4431)
 
 
+# Shows device version and if its wrong or right.
 def show_version():
     for host in devices:
         try:
@@ -56,6 +60,7 @@ def show_version():
     print("Finished")
 
 
+# Shows flash files
 def show_flash():
     for host in devices:
         try:
@@ -76,6 +81,7 @@ def show_flash():
     print("Finished")
 
 
+# Copies firmware over using timed command send
 def copy_firmware():
     for host in devices:
         try:
@@ -91,7 +97,7 @@ def copy_firmware():
             continue
     print("Finished")
 
-
+# Cleans old firmware files and boot files off the switches
 def clean_switch():
     for host in devices:
         try:
@@ -107,6 +113,7 @@ def clean_switch():
     print("Finished")
 
 
+# Sends install command to impliment new firmware bin
 def switch_install():
     for host in devices:
         try:
@@ -122,6 +129,7 @@ def switch_install():
     print("Finished")
 
 
+# Changes config boot order for routers and saves config
 def change_config():
     for host in devices:
         try:
@@ -134,7 +142,7 @@ def change_config():
             continue
     print("Finished")
 
-
+# Reloads the device
 def reload_router():
     for host in devices:
         try:
@@ -156,7 +164,7 @@ def reload_router():
 # Create Object
 root = Tk()
 
-# Initialize tkinter window with dimensions 100x100
+# Initialize tkinter window with the buttons
 root.geometry('500x500')
 btn = Button(root, text='Show Version Devices !', command=lambda: show_version())
 btn2 = Button(root, text='Copy Firmware Routers !', command=lambda: copy_firmware())
